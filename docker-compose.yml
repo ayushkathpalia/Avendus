@@ -1,0 +1,20 @@
+
+version: '3.3'
+
+services:
+  db:
+    image: mysql/mysql-server:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${DB} #'bse'
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD} #'test'
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - '3306:3306'
+    
+  app:
+    build: .
+    restart: always
+    command : uvicorn main:app --host 0.0.0.0 --reload
+    ports:
+      - "8000:8000"
